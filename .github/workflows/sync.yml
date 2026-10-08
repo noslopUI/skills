@@ -9,6 +9,16 @@ on:
   schedule:
     - cron: '41 5 * * *'
   workflow_dispatch:
+  # Also run when the sync itself changes, so an edit to it is tested at once.
+  # The job's own commit can't retrigger this: pushes made with GITHUB_TOKEN
+  # never start workflows, and it only touches skills/.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync.yml'
+      - 'scripts/sync-skill.mjs'
+
+concurrency: sync
 
 permissions:
   contents: write
