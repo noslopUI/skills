@@ -1,0 +1,34 @@
+name: Sync SKILL.md from noslopui.com
+
+# skills/noslopui/SKILL.md is a mirror. The source is the website, which
+# assembles the skill from its agent rules and serves it at
+# https://noslopui.com/skill/SKILL.md. This job pulls it once a day and
+# commits only when it changed, so the mirror is never more than a day behind.
+
+on:
+  schedule:
+    - cron: '41 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/sync-skill.mjs
+      - name: commit if it changed
+        run: |
+          if git diff --quiet; then
+            echo "No change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "sync: SKILL.md from noslopui.com"
+          git push
