@@ -1,6 +1,6 @@
 # noslopUI Skills
 
-Agent skills for [noslopUI](https://noslopui.com): hand-crafted UI blocks, Motion Lab effects and 280+ portable design systems in the [DESIGN.md format](https://github.com/google-labs-code/design.md), served to your coding agent over MCP.
+Agent skills for [noslopUI](https://noslopui.com): hand-crafted UI blocks, Motion Lab effects and 329 portable design systems in the [DESIGN.md format](https://github.com/google-labs-code/design.md), served to your coding agent over MCP.
 
 The `noslopui` skill teaches an agent (Claude Code, Cursor, Codex, VS Code, Windsurf, OpenCode, Antigravity, Devin and any other MCP client) how to build a UI that doesn't look AI-generated: choose one design system, restyle every component to it, search the catalog before hand-building a section, and keep the user's brand inside the system's rules.
 
@@ -25,6 +25,21 @@ npx skills add noslopUI/skills
 Or copy [`skills/noslopui/SKILL.md`](skills/noslopui/SKILL.md) into your agent's skills folder (for Claude Code: `~/.claude/skills/noslopui/SKILL.md`).
 
 The skill uses the noslopUI MCP server at `https://noslopui.com/api/mcp`. Setup steps for each agent: [noslopui.com/mcp](https://noslopui.com/mcp).
+
+## What's free
+
+- **The skill and its rules**, and the workflow your agent follows.
+- **The lint:** `npx noslopui check page.html` scores any page for the signs of AI-made design, whether or not noslopUI built it.
+- **150+ components and design systems, code included**, with no account: [noslopui.com/free](https://noslopui.com/free).
+- **Every live preview** in the catalog, and catalog search from your agent.
+
+The code for the rest of the catalog comes with a 3-day free trial (no card), then a plan.
+
+## How it differs from a rules-only design skill
+
+- **Real components to build from**, not only rules to follow: 500+ UI blocks and Motion Lab effects someone designed.
+- **One design system applied to every section**, chosen from 329, so a five-page build reads as one site.
+- **A lint that checks the result** against a budget, so "does this look AI-made?" has an answer you can run in CI.
 
 ## Where this file comes from
 
