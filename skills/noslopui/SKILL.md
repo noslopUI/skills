@@ -1,7 +1,7 @@
 ---
 name: noslopui
 description: Build a distinctive, non-generic page or app UI with noslopUI's hand-crafted catalog over MCP. Plans the page from the visitor's goal, chooses one design system and restyles real catalog components to it, writes the copy first, and checks the result against the measured AI-design tells (cream grounds, serif headline with one italic word, eyebrow labels, thin pages, invented proof). Use when asked to build a landing page, homepage, dashboard, portfolio or any new page or section, when the user mentions a noslopUI collection, or when a UI looks like "AI slop" and needs a real design system.
-version: 2026-11-17.1
+version: 2026-11-24.1
 ---
 
 # noslopUI
@@ -27,7 +27,7 @@ where you are in it.
    sign-in their agent shows (often an "Authenticate" button), or to run
    `npx noslopui@latest login`. Then carry on from the same step. Don't build
    without the catalog while you wait.
-3. **Is this skill current?** This file is version **2026-11-17.1**. The
+3. **Is this skill current?** This file is version **2026-11-24.1**. The
    server's instructions name the current version. If theirs is newer, call
    `get_guide({ topic: "workflow" })` and follow that instead. Tell the user
    once: "Your installed noslopUI skill is out of date; `npx noslopui@latest
@@ -53,9 +53,9 @@ Every call runs as the user's account:
 | 4 | Components for every section; study the category before picking | `find_sections`, `browse_category`, `get_component_code` |
 | 5 | Write the copy first | `get_guide` copy |
 | 6 | Post the picks | none |
-| 7 | Build the hero, then review it | `get_guide` review, `audit_page` |
+| 7 | Build the hero, then review it | `get_guide` review, `npx noslopui check` |
 | 8 | Build the rest; fit the brand; images | none |
-| 9 | Review the whole page and report | `audit_page` |
+| 9 | Review the whole page and report | `npx noslopui check` |
 
 ## The rules
 
@@ -69,7 +69,7 @@ Every call runs as the user's account:
 8. **Use the system's own hover, active and disabled states for every button, and where one is missing change the fill and the label colour together.** A hover that darkens the background but leaves dark text on it is unreadable, so check the label against the *new* fill, never just the old one. Variants (`button-secondary`, `-tinted`, `-outline`, `icon-button`) each have their own `-hover` entry in the DESIGN.md; do not reuse the primary's.
 9. **The catalog's photos, product shots and videos are noslopUI's demo media, not the user's.** Ask once how images should be done: (a) their own photos, (b) generated now with an image tool or an image API key they give you, (c) placeholder photos to replace before launch, or (d) labelled frames that name the shot. With nobody to answer: generate if an image tool or key is already available, otherwise labelled frames. Never ship an unrelated photo as if it were theirs, and never a demo's logo or lettering.
 10. **Never invent proof**: no numbers, ratings, quotes, names, logos or "trusted by" the user didn't give. Use a marked placeholder (at most two on a page) or show the product instead.
-11. **Write the copy before the markup, and check the page before calling it done.** `get_guide` serves the references (`copy`, `tells`, `page-goals`, `layout`, `review`) and `audit_page` lints a page. Hard rules always get fixed. The style tells are **signals, not bans**: a cream ground, a serif headline or a pill button is a normal choice on its own, and a page gets a **budget of two**. Stacking three or more is the AI house style, so bring it back to two.
+11. **Write the copy before the markup, and check the page before calling it done.** `get_guide` serves the references (`copy`, `tells`, `page-goals`, `layout`, `review`) and `npx noslopui@latest check page.html` lints a page on your machine (`audit_page` only when you have no shell). Hard rules always get fixed. The style tells are **signals, not bans**: a cream ground, a serif headline or a pill button is a normal choice on its own, and a page gets a **budget of two**. Stacking three or more is the AI house style, so bring it back to two.
 
 **You will drift toward the same few choices** (cream grounds, a serif
 headline with one italic word, a small label over every heading, three equal
@@ -301,7 +301,8 @@ If the user is there, a quick "go ahead?" is fine. If not, continue.
 
 Build the nav and the hero only. Then review them, following
 `get_guide({ topic: "review" })`:
-1. `audit_page`
+1. the lint: `npx noslopui@latest check page.html --json` on your machine
+   (`audit_page` only if you can't run a shell)
 2. look at the render, if you can
 3. fresh eyes, if you can
 
@@ -401,7 +402,8 @@ background before using it.
 ## Step 9: Review the whole page
 
 `get_guide({ topic: "review" })` again, on the full page:
-1. `audit_page`
+1. the lint: `npx noslopui@latest check page.html --json`
+   (`audit_page` only if you can't run a shell)
 2. look at it at 1440, 1280 and 390 if you can render
 3. walk the tells
 4. fresh eyes
@@ -452,7 +454,9 @@ Steps 1, 2 and 5 to 9 apply as usual.
 ```
 get_guide({ topic })            -> the guide's text
   topics: workflow, catalog, page-goals, layout, sections, copy, tells, review
-audit_page({ html, css?, surface? })
+npx noslopui@latest check page.html [--css f] [--surface s] --json
+                                -> the lint, run locally, no sign-in: { findings, summary }
+audit_page({ html, css?, surface? })   [only with no shell]
                                 -> { findings: [{ id, level, tell, fix, evidence }], summary, nextStep }
 
 search_design_systems({ surface?, query?, tags?, limit?, includeVocabulary? })
